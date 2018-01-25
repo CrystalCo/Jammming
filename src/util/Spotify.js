@@ -7,26 +7,7 @@ let url = "https://accounts.spotify.com/authorize";
 let accessToken = "";
 
 const Spotify = {
-  async getAccessToken() {
-    if (accessToken) {
-      return accessToken;
-    };
-    const urlToFetch = url + '?client_id=' + clientId + '&redirect_uri='
-    + redirectURI + '&response_type=token';
-
-    try {
-      let response = await fetch('urlToFetch')
-      if (response.ok) {
-        let jsonResponse = await response.json();
-        console.log(jsonResponse);
-        //code to execute
-        return jsonResponse;
-      };
-    }
-
-    catch (error) {
-      console.log(error);
-    }
+  getAccessToken() {
 
     //const urlAccessToken = window.location.href.match(/access_token=([^&]*)/);
     //const urlExpiresIn = window.location.href.match(/expires_in=([^&]*)/);
@@ -34,4 +15,4 @@ const Spotify = {
   }
 };
 
-export { Spotify };
+export default Spotify;

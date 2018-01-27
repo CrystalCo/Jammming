@@ -46,9 +46,7 @@ class App extends Component {
   }
 
   searchSpotify(searchTerm) {
-    console.log(searchTerm);
-    //had put arguments in quotes b/c not defined yet in Spotify.js
-    Spotify.search("name", "artist", "album").then(searchResults => {
+    Spotify.search(searchTerm).then(searchResults => {
       this.setState({searchResults: searchResults});
     })
   }

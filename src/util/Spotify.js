@@ -26,32 +26,36 @@ const Spotify = {
   },
 
   search(searchTerm) {
-    fetch(url + `search?type=track&q=${searchTerm}`, {
+    if (!searchTerm) {
+      return [];
+    }
+
+    let accessToken = this.getAccessToken();
+    let searchUrl = url + `search?type=track&q=${searchTerm}`;
+    return fetch(searchUrl, {
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        "Authorization": `Bearer ${accessToken}`
       }
     }).then(response => {
       if(response.ok) {
         console.log(response);
         return response.json();
       }
-      throw new Error('Request Failed!');
-    }, networkError => console.log(networkError.message)
+    }
     ).then(jsonResponse => {
       console.log(jsonResponse);
-      if (!jsonResponse) {
-        return "[]";
-      } else {
-        return jsonResponse.tracks.items.map(track => {
-          return {
-            id: track.id,
-            name: track.name,
-            artist: track.artist[0].name,
-            album: track.album.name,
-            uri: track.uri
-          }
-        });
+      if (!jsonResponse.tracks) {
+        return [];
       }
+      return jsonResponse.tracks.items.map(track => {
+        return {
+          "id": track.id,
+          "name": track.name,
+          "artist": track.artist[0].name,
+          "album": track.album.name,
+          "uri": track.uri
+        }
+      });
     });
   },
 

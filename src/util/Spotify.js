@@ -1,4 +1,3 @@
-//const apiKey = "";
 const clientId = "9a71923003d24d23b1b841756675754f";
 //const clientSecret = "6504a27a9b2a4e7c8e446752d3d6ca15";
 const redirectURI = "http://localhost:3000/";

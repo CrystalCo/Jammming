@@ -1,6 +1,6 @@
 let clientid = "9a71923003d24d23b1b841756675754f";
-let redirectUrl = "https://localhost:3000";
-//let redirectUrl = "http://ccml.surge.sh";
+//let redirectUrl = "https://localhost:3000";
+let redirectUrl = "http://crystal-clear-jammming.surge.sh/";
 var accessToken = undefined;
 
 //This object manage the access to the Spotify API

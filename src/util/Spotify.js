@@ -10,7 +10,7 @@ export let Spotify = {
   has authorized the application to access its information
   */
   getAccessToken() {
-    if (accessToken){
+    if(accessToken) {
     // The accessToken is already retrieved
       return accessToken;
     }
@@ -22,7 +22,7 @@ export let Spotify = {
     const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
     if (accessTokenMatch && state && expiresInMatch && (state[1] === '123ert456xvd987gfd')) {
     // The user has been redirected back to the application with the accessToken
-      accessToken = accessTokenMatch[1];
+      let accessToken = accessTokenMatch[1];
       const expiresIn = Number(expiresInMatch[1]);
     // A timer will reset the accessToken after its timeout
       window.setTimeout(() => accessToken = '', expiresIn * 1000);
@@ -41,7 +41,8 @@ export let Spotify = {
     return [];
   }
   // We need the accessToken to put it in the header of the request
-    var accessToken = this.getAccessToken();
+    let accessToken = this.getAccessToken();
+    console.log(accessToken);
     var query = `https://api.spotify.com/v1/search?type=track&q=${term}`;
     var myHeaders = new Headers();
     myHeaders.append('Authorization', `Bearer ${accessToken}`);

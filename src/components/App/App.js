@@ -16,15 +16,15 @@ class App extends React.Component {
       playlistTracks: []
     };
 
-    this.searchSpotify = this.searchSpotify.bind(this);
+    this.search = this.search.bind(this);
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
   }
 
-  searchSpotify(searchTerm) {
-    Spotify.search(searchTerm).then(searchResults =>
+  search(term) {
+    Spotify.search(term).then(searchResults =>
       this.setState({
         searchResults: searchResults
       })
@@ -73,7 +73,7 @@ class App extends React.Component {
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <SearchBar onSearch={this.searchSpotify} />
+          <SearchBar onSearch={this.search} />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
             <Playlist playlistName={this.state.playlistName}

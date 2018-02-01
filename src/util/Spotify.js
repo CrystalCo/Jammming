@@ -1,10 +1,10 @@
-let clientid = "9a71923003d24d23b1b841756675754f";
+const clientid = "9a71923003d24d23b1b841756675754f";
 //let redirectUrl = "https://localhost:3000";
-let redirectUrl = "http://crystal-clear-jammming.surge.sh/";
-var accessToken = undefined;
+const redirectUrl = "http://crystal-clear-jammming.surge.sh/";
+let accessToken = "BQBIZ3OnuZ1fQMJEocqkXyd19rhWzc9a39HrqT9oj-O3xj4emLlU7MsY85kRmbjk_wAnfoQVSXjcinZutOVZs9iMg53ZM9_iE05fEZ9UGA3YEV0icYvvrJG4IqD3vwTfI7OV1p1-AI6ElrNuDUtdkgBasizVsgtsqPdBonSvGVHB8e0-FAFgMg";
 
 //This object manage the access to the Spotify API
-export let Spotify = {
+const Spotify = {
   /*
     This method return the accessToken that prove the user is authenticated and
   has authorized the application to access its information
@@ -42,7 +42,6 @@ export let Spotify = {
   }
   // We need the accessToken to put it in the header of the request
     let accessToken = this.getAccessToken();
-    console.log(accessToken);
     var query = `https://api.spotify.com/v1/search?type=track&q=${term}`;
     var myHeaders = new Headers();
     myHeaders.append('Authorization', `Bearer ${accessToken}`);
@@ -56,10 +55,12 @@ export let Spotify = {
       if(!jsonResponse.tracks) {
         return [];
       }
+      console.log(jsonResponse);
       return jsonResponse.tracks.items.map(track => {
         return {
           "id": track.id,
-          "name": track.artists[0].name,
+          "name": track.name,
+          "artist": track.artists[0].name,
           "album": track.album.name,
           "uri": track.uri
         };
@@ -112,7 +113,7 @@ export let Spotify = {
 
 };
 
-
+export default Spotify;
 
 
 

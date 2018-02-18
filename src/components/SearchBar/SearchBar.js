@@ -19,7 +19,7 @@ export class SearchBar extends React.Component {
   }
 
   handleKeyPress(e) {
-    const key = e.key;
+    let key = e.key;
     let term = e.target.value;
     if (key === 'enter' || key === 'Enter' || key === 'return') {
       return this.search(term);

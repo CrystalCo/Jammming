@@ -1,7 +1,7 @@
 const clientid = '9a71923003d24d23b1b841756675754f';
 let redirectUrl = 'localhost:3000';
 //const redirectUrl = "http://crystal-clear-jammming.surge.sh/";
-let accessToken = 'BQCxXMr5LYA25sl4UgruXpM5S8QH497EBmJ30WW4Fe9wgdVOgwJsNZGGuEBKE8sQjhaunlGT0K0gGjLPZ4Skxj8o8atLiXaL71vRpzQyPauiWzrDbOQV2_0gYnJLLC1uu_VbDAsBwgvtzg53MRMTFnQIXZrX4sUzH';
+let accessToken;
 
 //This object manage the access to the Spotify API
 const Spotify = {
@@ -18,11 +18,10 @@ const Spotify = {
   // We have to determine if we have to redirect the user to the Spotify login/authorization page
   // or if the user come back from the Spotify login
     const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
-
     const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
     if (accessTokenMatch && expiresInMatch) {
     // The user has been redirected back to the application with the accessToken
-      let accessToken = accessTokenMatch[1];
+      accessToken = accessTokenMatch[1];
       const expiresIn = Number(expiresInMatch[1]);
     // A timer will reset the accessToken after its timeout
       window.setTimeout(() => accessToken = '', expiresIn * 1000);

@@ -1,5 +1,5 @@
 const clientid = '9a71923003d24d23b1b841756675754f';
-let redirectUrl = 'http://localhost:3000/';
+let redirectUrl = 'localhost:3000';
 //const redirectUrl = "http://crystal-clear-jammming.surge.sh/";
 let accessToken = '';
 

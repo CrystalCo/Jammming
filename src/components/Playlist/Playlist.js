@@ -1,8 +1,8 @@
 import React from 'react';
 import './Playlist.css';
-import { TrackList } from '../TrackList/TrackList';
+import TrackList from '../TrackList/TrackList';
 
-export class Playlist extends React.Component {
+class Playlist extends React.Component {
   constructor(props) {
     super(props);
 
@@ -26,3 +26,5 @@ export class Playlist extends React.Component {
     )
   }
 }
+
+export default Playlist;

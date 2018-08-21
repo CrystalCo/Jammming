@@ -1,6 +1,8 @@
 const clientid = '9a71923003d24d23b1b841756675754f';
 let redirectUrl = 'localhost:3000';
 //const redirectUrl = "http://crystal-clear-jammming.surge.sh/";
+
+// Set an access token.
 let accessToken;
 
 //This object manage the access to the Spotify API
@@ -29,11 +31,12 @@ const Spotify = {
       return accessToken;
     } else {
     // We have to redirect the user to the Spotify login/authorization page
-      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientid}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUrl}`;
+      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientid}&response_type=token&scope=user-read-private%20user-read-email%20playlist-modify-public&redirect_uri=${redirectUrl}`;
       window.location = accessUrl;
     }
   },
 
+  
   //This method query Spotify to retrieve a list of track matching a query
   search(term) {
     if(!term) {
@@ -41,7 +44,7 @@ const Spotify = {
     }
     // We need the accessToken to put it in the header of the request
     accessToken = Spotify.getAccessToken();
-    const theUrl = `https://api.spotify.com/v1/search?type=track&q=${term.replace(' ', '%20')}`;
+    const theUrl = `https://api.spotify.com/v1/search?q=${term}&type=track`;
     return fetch(theUrl, {
       headers: {
         Authorization: `Bearer ${accessToken}`

@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 
-import { Playlist } from '../Playlist/Playlist';
-import { SearchBar } from '../SearchBar/SearchBar';
-import { SearchResults } from '../SearchResults/SearchResults';
+import Playlist from '../Playlist/Playlist';
+import SearchBar from '../SearchBar/SearchBar';
+import SearchResults from '../SearchResults/SearchResults';
 import Spotify from '../../util/Spotify.js';
 
 class App extends React.Component {
@@ -24,16 +24,19 @@ class App extends React.Component {
   }
 
   search(term) {
-    Spotify.search(term).then(searchResults =>
-      this.setState({
-        searchResults: searchResults
-      })
-    )
+    if (term) {
+      console.log(`The search term was ${term}`);
+      Spotify.search(term).then(searchResults => {
+        this.setState({
+          searchResults: searchResults
+        });
+      });
+    }
   }
 
   addTrack(track) {
     if (!this.state.playlistTracks.includes(track.id)) {
-      let newPlaylist = this.state.playlistTracks.push(track.id);
+      let newPlaylist = this.state.playlistTracks.concat(track);
       this.setState({
         playlistTracks: newPlaylist
       })

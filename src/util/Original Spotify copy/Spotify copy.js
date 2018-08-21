@@ -18,9 +18,9 @@ const Spotify = {
   // We have to determine if we have to redirect the user to the Spotify login/authorization page
   // or if the user come back from the Spotify login
     const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
-
+    const state = window.location.href.match(/state=(.[^&]*)/);
     const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
-    if (accessTokenMatch && expiresInMatch) {
+    if (accessTokenMatch && state && expiresInMatch && (state[1] === '123ert456xvd987gfd')) {
     // The user has been redirected back to the application with the accessToken
       let accessToken = accessTokenMatch[1];
       const expiresIn = Number(expiresInMatch[1]);
@@ -30,7 +30,7 @@ const Spotify = {
       return accessToken;
     } else {
     // We have to redirect the user to the Spotify login/authorization page
-      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientid}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUrl}`;
+      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientid}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUrl}&state=123ert456xvd987gfd`;
       window.location = accessUrl;
     }
   },
@@ -41,10 +41,14 @@ const Spotify = {
     return [];
   }
   // We need the accessToken to put it in the header of the request
-    const accessToken = Spotify.getAccessToken();
-    return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {
+    let accessToken = this.getAccessToken();
+    var query = `https://api.spotify.com/v1/search?query=${term}&type=track&market=US&offset=0&limit=20`;
+    var myHeaders = new Headers();
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
+    return fetch(query, {
+      method: 'GET',
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        'Authorization': `Bearer ${accessToken}`,
       }
     }).then(response => {
         return response.json()
@@ -65,7 +69,6 @@ const Spotify = {
       })
     });
   },
-
   /*
     This method store a playlist to the user Spotify public playlists.
 

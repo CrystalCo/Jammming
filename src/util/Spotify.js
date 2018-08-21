@@ -1,7 +1,7 @@
 const clientid = '9a71923003d24d23b1b841756675754f';
 let redirectUrl = 'localhost:3000';
 //const redirectUrl = "http://crystal-clear-jammming.surge.sh/";
-let accessToken = '';
+let accessToken = 'BQCxXMr5LYA25sl4UgruXpM5S8QH497EBmJ30WW4Fe9wgdVOgwJsNZGGuEBKE8sQjhaunlGT0K0gGjLPZ4Skxj8o8atLiXaL71vRpzQyPauiWzrDbOQV2_0gYnJLLC1uu_VbDAsBwgvtzg53MRMTFnQIXZrX4sUzH';
 
 //This object manage the access to the Spotify API
 const Spotify = {
@@ -37,12 +37,13 @@ const Spotify = {
 
   //This method query Spotify to retrieve a list of track matching a query
   search(term) {
-  if(!term) {
-    return [];
-  }
-  // We need the accessToken to put it in the header of the request
-    const accessToken = Spotify.getAccessToken();
-    return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {
+    if(!term) {
+      return [];
+    }
+    // We need the accessToken to put it in the header of the request
+    accessToken = Spotify.getAccessToken();
+    const theUrl = `https://api.spotify.com/v1/search?type=track&q=${term.replace(' ', '%20')}`;
+    return fetch(theUrl, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
@@ -56,11 +57,11 @@ const Spotify = {
       console.log(jsonResponse);
       return jsonResponse.tracks.items.map(track => {
         return {
-          "id": track.id,
-          "name": track.name,
-          "artist": track.artists[0].name,
-          "album": track.album.name,
-          "uri": track.uri
+          id: track.id,
+          name: track.name,
+          artist: track.artists[0].name,
+          album: track.album.name,
+          uri: track.uri
         };
       })
     });
